@@ -50,7 +50,7 @@ app.get('/random_article', function(req, res, next){
 });
 
 app.get('/temp_article/:id', function(req, res, next){
-  if (fs.existsSync(path.join(__dirname, req.body.id+'.json')) == false) {
+  if (fs.existsSync(path.join(__dirname, req.params.id+'.json')) == false) {
     res.send("Invalid id- file doesn't exist");
     return;
   }
@@ -67,7 +67,7 @@ app.post('/temp_article', function(req, res, next){
   jsonfile.writeFile(path.join(__dirname, req.body.id+'.json'), content);
   setTimeout(function () {
     fs.unlink(path.join(__dirname, req.body.id+'.json'));
-  }, 10000);
+  }, 1000);
   res.render('valid_article', {content: content});
 });
 
