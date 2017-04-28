@@ -54,8 +54,8 @@ app.get('/temp_article/:id', function(req, res, next){
     res.send("Invalid id- file doesn't exist");
     return;
   }
-  jsonfile.readFile(path.join(__dirname, req.body.id+'.json'), function(err, content) {
-    res.render('valid_article', {content: content });
+  jsonfile.readFile(path.join(__dirname, req.params.id+'.json'), function(err, content) {
+    res.render('valid_article', content);
   });
 });
 
@@ -67,8 +67,8 @@ app.post('/temp_article', function(req, res, next){
   jsonfile.writeFile(path.join(__dirname, req.body.id+'.json'), content);
   setTimeout(function () {
     fs.unlink(path.join(__dirname, req.body.id+'.json'));
-  }, 1000);
-  res.render('valid_article', {content: content});
+  }, 10000);
+  res.render('valid_article', content);
 });
 
 // catch 404 and forward to error handler
