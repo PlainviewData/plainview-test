@@ -1,6 +1,9 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+var loremIpsum = require('lorem-ipsum')
+var shortid = require('shortid');
+var jsonfile = require('jsonfile')
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -25,16 +28,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-fs.readFile('default_html_contents.json', function(err, data){
+fs.readFile('static_html_contents.json', function(err, data){
   articles = JSON.parse(data.toString());
 });
 
 // app.use('/', index);
 // app.use('/validPage', users);
 
-app.get('/unchanged_article/simple/:storyId', function(req, res, next){
+app.get('/static_article/simple/:storyId', function(req, res, next){
   var article = articles[req.params.storyId];
   res.render('valid_article', {story: article.story, author: article.author, date: article.date, headline: article.headline});
+});
+
+app.get('/random_article', function(req, res, next){
+  var story = loremIpsum({count: Math.floor(Math.random() * (30 - 10 + 1)) + 10, units:'sentences' , paragraphLowerBound: 4, paragraphLowerBound: 8});
+  var author = loremIpsum({count: Math.floor(Math.random() * (3 - 2 + 1)) + 2, units:'words'});
+  var dateObj = new Date();
+  var date = (dateObj.getMonth() + 1) + '/' + dateObj.getDate() + '/' +  dateObj.getFullYear();
+  var headline = loremIpsum({count: 1, units: 'sentences'});
+  res.render('valid_article', {story: story, author: author, date: date, headline: headline});
+});
+
+app.get('/temp_article/:id', function(req, res, next){
+  jsonfile.readFile('./random_articles/'+req.params.id+'.json', function(err, content) {
+    res.render('valid_article', {story: content.story, author: content.author, date: content.date, headline: content.headline });
+  });
+});
+
+app.post('/temp_article', function(req, res, next){
+  var id = shortid.generate();
+  var content = {story: req.body.content.story, author: req.body.content.author, date: req.body.content.date, headline: req.body.content.headline};
+  jsonfile.writeFile('./random_articles/'+id+'.json', content);
+  setTimeout(function () {
+    fs.unlink('./random_articles/'+id+'.json');
+  }, 10000);
+  res.render('valid_article', {content: content});
 });
 
 // catch 404 and forward to error handler
