@@ -50,11 +50,11 @@ app.get('/random_article', function(req, res, next){
 });
 
 app.get('/temp_article/:id', function(req, res, next){
-  if (fs.existsSync('./temp_articles/'+req.params.id+'.json') == false) {
+  if (fs.existsSync(path.join(__dirname, req.body.id+'.json')) == false) {
     res.send("Invalid id- file doesn't exist");
     return;
   }
-  jsonfile.readFile('./temp_articles/'+req.params.id+'.json', function(err, content) {
+  jsonfile.readFile(path.join(__dirname, req.body.id+'.json'), function(err, content) {
     res.render('valid_article', {content: content });
   });
 });
@@ -64,9 +64,9 @@ app.post('/temp_article', function(req, res, next){
     res.status(400).send("Please enter an id");
   }
   var content = {story: req.body.story, author: req.body.author, date: req.body.date, headline: req.body.headline};
-  jsonfile.writeFile('./temp_articles/'+req.body.id+'.json', content);
+  jsonfile.writeFile(path.join(__dirname, req.body.id+'.json'), content);
   setTimeout(function () {
-    fs.unlink('./temp_articles/'+req.body.id+'.json');
+    fs.unlink(path.join(__dirname, req.body.id+'.json'));
   }, 10000);
   res.render('valid_article', {content: content});
 });
