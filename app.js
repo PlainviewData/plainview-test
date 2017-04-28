@@ -56,11 +56,10 @@ app.get('/temp_article/:id', function(req, res, next){
 });
 
 app.post('/temp_article', function(req, res, next){
-  var id = shortid.generate();
-  var content = {story: req.body.content.story, author: req.body.content.author, date: req.body.content.date, headline: req.body.content.headline};
-  jsonfile.writeFile('./random_articles/'+id+'.json', content);
+  var content = {story: req.body.story, author: req.body.author, date: req.body.date, headline: req.body.headline};
+  jsonfile.writeFile('./random_articles/'+req.body.id+'.json', content);
   setTimeout(function () {
-    fs.unlink('./random_articles/'+id+'.json');
+    fs.unlink('./random_articles/'+req.body.id+'.json');
   }, 10000);
   res.render('valid_article', {content: content});
 });
