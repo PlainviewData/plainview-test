@@ -1,0 +1,30 @@
+[
+  {
+    "id": "000001",
+    "story": "a",
+    "headline": "b",
+    "author": "c",
+    "date": "d"
+  },
+  {
+    "id": "000002",
+    "story": "aa, aa",
+    "headline": "bb, bb",
+    "author": "cc, cc",
+    "date": "dd, dd"
+  },
+  {
+    "id": "000003",
+    "story": "We all know that feeling. You're scrolling down your newsfeed and see one of those dreadful but enticing list posts. 'Top 21 Arts and Crafts Stores'... talk about guilty pleasure. Well, after falling into the trap hundreds of times myself, I've compiled the top 5 reasons why we read top 5 lists. 1. We are lazy 2. We like bite size information because our attention spans are low. 3. We don't have anything else to do while our professor or boss is talking. 4. Someone shared a status alongside the post and we want to know if it lives up to the hype. 5. We deny our inability to not look at a screen for 5 minutes.",
+    "headline": "Top 5 Reasons You're Reading Top 5 Lists",
+    "author": "Pink Bubble Gum & Pocka Dots",
+    "date": "4/28/2017"
+  },
+  {
+    "id": "000004",
+    "story": "There is no way to make good chicken, stop trying. Just put the M&M's on the gravy and eat the chicken with a cup of stale coffee.",
+    "headline": "How to Make Great Chicken",
+    "author": "Martha Barfa",
+    "date": "2017 April 28"
+  }
+]
